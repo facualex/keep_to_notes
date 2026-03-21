@@ -19,8 +19,8 @@ Convierte un export de Google Keep (vía Google Takeout) a formato `.enex` para 
 ## Instalación
 
 ```bash
-git clone https://github.com/tu-usuario/keep_to_enex.git
-cd keep_to_enex
+git clone https://github.com/facualex/keep_to_notes.git
+cd keep_to_notes
 pip install -r requirements.txt
 ```
 
