@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Keep to Notes</title>
+
+  <!-- Google Fonts: Fraunces (display) + DM Sans (body) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,600;1,9..144,300&display=swap" rel="stylesheet" />
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['"DM Sans"', 'sans-serif'],
+            display: ['Fraunces', 'Georgia', 'serif'],
+          },
+          colors: {
+            accent: {
+              50:  '#f0fdf6',
+              100: '#dcfce9',
+              200: '#bbf7d2',
+              300: '#86efb0',
+              400: '#4ade80',
+              500: '#22c55e',
+              600: '#16a34a',
+              700: '#15803d',
+              800: '#166534',
+              900: '#14532d',
+            },
+          },
+        },
+      },
+    }
+  </script>
+  <style>
+    body { font-family: 'DM Sans', sans-serif; }
+    .font-display { font-family: 'Fraunces', Georgia, serif; }
+
+    /* Drop zone active state */
+    .drop-active {
+      border-color: #16a34a !important;
+      background-color: #f0fdf6 !important;
+    }
+
+    /* Details/summary chevron */
+    details summary { list-style: none; }
+    details summary::-webkit-details-marker { display: none; }
+    details[open] .chevron { transform: rotate(180deg); }
+    .chevron { transition: transform 0.2s ease; }
+
+    /* Spinner */
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .spinner {
+      width: 20px; height: 20px;
+      border: 2px solid #d1fae5;
+      border-top-color: #16a34a;
+      border-radius: 50%;
+      animation: spin 0.7s linear infinite;
+      display: inline-block;
+    }
+  </style>
+</head>
+
+<body class="min-h-screen bg-stone-50 flex flex-col items-center justify-center px-4 py-12">
+
+  <!-- ── Card ─────────────────────────────────────────────────────────── -->
+  <main class="w-full max-w-lg">
+
+    <!-- Header -->
+    <div class="mb-10 text-center">
+      <h1 class="font-display text-4xl font-semibold text-stone-800 tracking-tight leading-tight">
+        Keep <span class="text-accent-600 italic font-light">to</span> Notes
+      </h1>
+      <p class="mt-2 text-stone-400 text-sm font-light tracking-wide">
+        Convierte tu exportación de Google Keep a Apple Notes en segundos.
+      </p>
+    </div>
+
+    <!-- Card -->
+    <div class="bg-white rounded-2xl shadow-sm border border-stone-100 p-8">
+
+      <!-- How to get the ZIP -->
+      <details class="mb-6 group">
+        <summary class="flex items-center justify-between gap-2 cursor-pointer select-none">
+          <span class="flex items-center gap-2 text-stone-400 text-xs hover:text-stone-600 transition-colors">
+            <svg class="w-3.5 h-3.5 text-accent-500 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M9.879 7.519c1.171-1.025 3.071-1.025 4.242 0 1.172 1.025 1.172 2.687 0 3.712-.203.179-.43.326-.67.442-.745.361-1.45.999-1.45 1.827v.75M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9 5.25h.008v.008H12v-.008z" />
+            </svg>
+            ¿Cómo exportar tus notas desde Google Keep?
+          </span>
+          <svg class="chevron w-3.5 h-3.5 text-stone-300 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+          </svg>
+        </summary>
+
+        <ol class="mt-4 space-y-3.5">
+          <li class="flex items-start gap-3">
+            <span class="shrink-0 w-5 h-5 rounded-full bg-accent-100 text-accent-700 text-xs font-semibold flex items-center justify-center mt-0.5">1</span>
+            <span class="text-stone-500 text-xs leading-relaxed">
+              Ve a
+              <a href="https://takeout.google.com" target="_blank" rel="noopener noreferrer"
+                class="text-accent-600 hover:text-accent-700 underline underline-offset-2 decoration-accent-300 transition-colors">
+                takeout.google.com
+              </a>
+              e inicia sesión con tu cuenta de Google.
+            </span>
+          </li>
+          <li class="flex items-start gap-3">
+            <span class="shrink-0 w-5 h-5 rounded-full bg-accent-100 text-accent-700 text-xs font-semibold flex items-center justify-center mt-0.5">2</span>
+            <span class="text-stone-500 text-xs leading-relaxed">
+              Haz clic en <span class="text-stone-600 font-medium">«Deseleccionar todo»</span>,
+              luego activa únicamente <span class="text-stone-600 font-medium">Keep</span> y pulsa
+              <span class="text-stone-600 font-medium">«Siguiente paso»</span> → <span class="text-stone-600 font-medium">«Crear exportación»</span>.
+            </span>
+          </li>
+          <li class="flex items-start gap-3">
+            <span class="shrink-0 w-5 h-5 rounded-full bg-accent-100 text-accent-700 text-xs font-semibold flex items-center justify-center mt-0.5">3</span>
+            <span class="text-stone-500 text-xs leading-relaxed">
+              Cuando recibas el correo de Google, descarga el
+              <code class="bg-stone-100 px-1 py-0.5 rounded text-stone-500">.zip</code>
+              y súbelo aquí abajo.
+            </span>
+          </li>
+        </ol>
+      </details>
+
+      <div class="border-t border-stone-100 mb-6"></div>
+
+      <!-- Drop zone -->
+      <div
+        id="drop-zone"
+        class="border-2 border-dashed border-stone-200 rounded-xl p-10 text-center cursor-pointer transition-colors duration-200 hover:border-accent-400 hover:bg-accent-50"
+        role="button"
+        tabindex="0"
+        aria-label="Zona de carga de archivo ZIP"
+      >
+        <input
+          id="file-input"
+          type="file"
+          accept=".zip"
+          class="hidden"
+          aria-hidden="true"
+        />
+
+        <!-- Icon -->
+        <div id="drop-icon" class="flex justify-center mb-4">
+          <svg class="w-10 h-10 text-stone-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+            <path stroke-linecap="round" stroke-linejoin="round"
+              d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5m-13.5-9L12 3m0 0l4.5 4.5M12 3v13.5" />
+          </svg>
+        </div>
+
+        <!-- State: empty -->
+        <div id="drop-empty">
+          <p class="text-stone-500 text-sm font-medium">Arrastra tu archivo <span class="text-accent-600">.zip</span> aquí</p>
+          <p class="text-stone-400 text-xs mt-1">o haz clic para seleccionarlo</p>
+        </div>
+
+        <!-- State: file selected -->
+        <div id="drop-selected" class="hidden">
+          <p id="file-name" class="text-stone-700 text-sm font-medium truncate max-w-xs mx-auto"></p>
+          <p class="text-stone-400 text-xs mt-1">Archivo listo para convertir</p>
+        </div>
+      </div>
+
+      <!-- Error message -->
+      <div id="error-box" class="hidden mt-5 bg-red-50 border border-red-100 rounded-xl px-4 py-3">
+        <p class="text-red-600 text-sm font-medium leading-snug" id="error-text"></p>
+      </div>
+
+      <!-- Success message -->
+      <div id="success-box" class="hidden mt-5 bg-accent-50 border border-accent-100 rounded-xl px-4 py-3 flex items-start gap-3">
+        <svg class="w-5 h-5 text-accent-600 mt-0.5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+        </svg>
+        <p class="text-accent-700 text-sm font-medium">
+          Conversión completada. La descarga comenzó automáticamente.
+        </p>
+      </div>
+
+      <!-- Convert button -->
+      <button
+        id="convert-btn"
+        disabled
+        class="mt-6 w-full flex items-center justify-center gap-2.5 bg-accent-600 hover:bg-accent-700 disabled:bg-stone-200 disabled:text-stone-400 disabled:cursor-not-allowed text-white font-medium text-sm rounded-xl py-3.5 transition-colors duration-200"
+      >
+        <span id="btn-label">Convertir a .enex</span>
+        <span id="btn-spinner" class="hidden spinner"></span>
+      </button>
+
+      <!-- Privacy note -->
+      <p class="mt-4 flex items-center justify-center gap-1.5 text-stone-400 text-xs">
+        <svg class="w-3.5 h-3.5 text-stone-300 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z" />
+        </svg>
+        Tu archivo se procesa en el servidor y se elimina de inmediato. No se almacena ni se comparte con terceros.
+      </p>
+
+    </div><!-- /card -->
+
+    <!-- ── Import instructions ───────────────────────────────────────── -->
+    <div class="mt-10 text-center text-stone-400 text-xs leading-relaxed px-2">
+      <p class="font-medium text-stone-500 mb-2">Cómo importar el <span class="text-stone-600">.enex</span> en Apple Notes</p>
+      <p>
+        <span class="font-medium text-stone-500">Mac —</span>
+        Abre Notes → Archivo → Importar a Notes → selecciona <code class="bg-stone-100 px-1 rounded text-stone-500">keep_export.enex</code>
+      </p>
+      <p class="mt-1">
+        <span class="font-medium text-stone-500">iPhone / iPad —</span>
+        Abre el archivo <code class="bg-stone-100 px-1 rounded text-stone-500">.enex</code> desde Archivos →
+        toca el ícono de compartir → Notes
+      </p>
+    </div>
+
+  </main>
+
+  <!-- ── JavaScript ────────────────────────────────────────────────────── -->
+  <script>
+    const dropZone     = document.getElementById('drop-zone');
+    const fileInput    = document.getElementById('file-input');
+    const dropEmpty    = document.getElementById('drop-empty');
+    const dropSelected = document.getElementById('drop-selected');
+    const fileNameEl   = document.getElementById('file-name');
+    const convertBtn   = document.getElementById('convert-btn');
+    const btnLabel     = document.getElementById('btn-label');
+    const btnSpinner   = document.getElementById('btn-spinner');
+    const errorBox     = document.getElementById('error-box');
+    const errorText    = document.getElementById('error-text');
+    const successBox   = document.getElementById('success-box');
+
+    let selectedFile = null;
+
+    // ── File selection helpers ──────────────────────────────────────────
+
+    function setFile(file) {
+      if (!file) return;
+
+      if (!file.name.toLowerCase().endsWith('.zip')) {
+        showError('Solo se aceptan archivos .zip exportados de Google Takeout.');
+        return;
+      }
+
+      selectedFile = file;
+      fileNameEl.textContent = file.name;
+      dropEmpty.classList.add('hidden');
+      dropSelected.classList.remove('hidden');
+      convertBtn.disabled = false;
+      hideMessages();
+    }
+
+    function resetState() {
+      selectedFile = null;
+      fileInput.value = '';
+      dropEmpty.classList.remove('hidden');
+      dropSelected.classList.add('hidden');
+      convertBtn.disabled = true;
+      setLoading(false);
+    }
+
+    // ── Messages ────────────────────────────────────────────────────────
+
+    function hideMessages() {
+      errorBox.classList.add('hidden');
+      successBox.classList.add('hidden');
+    }
+
+    function showError(msg) {
+      errorText.textContent = msg;
+      errorBox.classList.remove('hidden');
+      successBox.classList.add('hidden');
+    }
+
+    function showSuccess() {
+      successBox.classList.remove('hidden');
+      errorBox.classList.add('hidden');
+    }
+
+    // ── Loading state ───────────────────────────────────────────────────
+
+    function setLoading(loading) {
+      convertBtn.disabled = loading;
+      dropZone.style.pointerEvents = loading ? 'none' : '';
+
+      if (loading) {
+        btnLabel.textContent = 'Convirtiendo...';
+        btnSpinner.classList.remove('hidden');
+      } else {
+        btnLabel.textContent = 'Convertir a .enex';
+        btnSpinner.classList.add('hidden');
+      }
+    }
+
+    // ── Drop zone events ────────────────────────────────────────────────
+
+    dropZone.addEventListener('click', () => fileInput.click());
+
+    dropZone.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') fileInput.click();
+    });
+
+    fileInput.addEventListener('change', () => {
+      if (fileInput.files.length) setFile(fileInput.files[0]);
+    });
+
+    dropZone.addEventListener('dragover', (e) => {
+      e.preventDefault();
+      dropZone.classList.add('drop-active');
+    });
+
+    dropZone.addEventListener('dragleave', () => {
+      dropZone.classList.remove('drop-active');
+    });
+
+    dropZone.addEventListener('drop', (e) => {
+      e.preventDefault();
+      dropZone.classList.remove('drop-active');
+      const file = e.dataTransfer?.files[0];
+      if (file) setFile(file);
+    });
+
+    // ── Conversion ──────────────────────────────────────────────────────
+
+    convertBtn.addEventListener('click', async () => {
+      if (!selectedFile) return;
+
+      hideMessages();
+      setLoading(true);
+
+      const formData = new FormData();
+      formData.append('file', selectedFile);
+
+      try {
+        const response = await fetch('/convert', {
+          method: 'POST',
+          body: formData,
+        });
+
+        if (!response.ok) {
+          // Try to parse error JSON from server
+          let detail = `Error ${response.status}`;
+          try {
+            const json = await response.json();
+            detail = json.detail || detail;
+          } catch {
+            // non-JSON error body
+          }
+          throw new Error(detail);
+        }
+
+        // Trigger download via Blob
+        const blob = await response.blob();
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'keep_export.enex';
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+        URL.revokeObjectURL(url);
+
+        showSuccess();
+        resetState();
+
+      } catch (err) {
+        const msg = err instanceof TypeError
+          ? 'No se pudo conectar al servidor. Verifica tu conexión e inténtalo de nuevo.'
+          : (err.message || 'Error inesperado durante la conversión.');
+        showError(msg);
+        setLoading(false);
+        // Keep file selected so user can retry
+        convertBtn.disabled = false;
+      }
+    });
+  </script>
+
+</body>
+</html>

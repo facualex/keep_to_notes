@@ -1,6 +1,8 @@
-# keep_to_enex
+# Keep to Notes
 
 Convierte un export de Google Keep (vía Google Takeout) a formato `.enex` para importar directamente en **Apple Notes**.
+
+Disponible como **aplicación web** (sube el `.zip` desde el navegador) o como **script de línea de comandos**.
 
 ## Características
 
@@ -14,7 +16,7 @@ Convierte un export de Google Keep (vía Google Takeout) a formato `.enex` para 
 ## Requisitos
 
 - Python 3.8+
-- `beautifulsoup4` (opcional, pero recomendado para mejor calidad de conversión)
+- Dependencias listadas en `requirements.txt`
 
 ## Instalación
 
@@ -24,7 +26,23 @@ cd keep_to_notes
 pip install -r requirements.txt
 ```
 
-## Uso
+---
+
+## Uso — Aplicación web
+
+**Paso 1 — Arrancar el servidor**
+
+```bash
+uvicorn main:app --host 0.0.0.0 --port 8000
+```
+
+**Paso 2 — Abrir en el navegador**
+
+Ve a `http://localhost:8000`, arrastra tu `.zip` de Google Takeout y haz clic en **Convertir a .enex**. El archivo se descarga automáticamente al terminar.
+
+---
+
+## Uso — Línea de comandos
 
 **Paso 1 — Exportar desde Google Keep**
 
@@ -43,12 +61,26 @@ python3 keep_to_enex.py carpeta_keep/
 python3 keep_to_enex.py takeout.zip --output mis_notas.enex
 ```
 
-**Paso 3 — Importar en Apple Notes**
+---
+
+## Importar en Apple Notes
 
 | Dispositivo | Pasos |
 |-------------|-------|
 | **Mac** | Notes → `File` → `Import to Notes...` → selecciona el `.enex` |
 | **iPhone / iPad** | Abre el `.enex` desde Files → toca compartir → elige Notes |
+
+## Estructura del proyecto
+
+```
+keep_to_notes/
+├── main.py              # Servidor web (FastAPI)
+├── keep_to_enex.py      # Script de conversión
+├── requirements.txt     # Dependencias Python
+├── static/
+│   └── index.html       # Interfaz web
+└── tmp/                 # Archivos temporales (generado en runtime, ignorado por git)
+```
 
 ## Limitaciones conocidas
 
